@@ -8,24 +8,37 @@
  * - O conteudo deve ser dinâmico
  */
 
-import { useState } from 'react';
-import Head from 'next/head';
+import { useState } from "react";
 
-import styles from '@/styles/modal.module.css';
-import { Modal } from '@/components/Modal';
+import styles from "@/styles/modal.module.css";
+import { ConfirmationModal } from "@/components/ConfirmationModal";
 
 export default function Home() {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 
+	function handleToggleModal() {
+		setModalIsOpen(!modalIsOpen);
+	}
+
 	return (
 		<>
 			<main className={styles.container}>
-				<button type="button" onClick={() => setModalIsOpen(true)}>
+				<button type="button" onClick={handleToggleModal}>
 					Abrir modal de confirmação
 				</button>
 			</main>
 
-			{/* Renderizar modal de confirmação */}
+			{modalIsOpen && (
+				<ConfirmationModal toggleModal={handleToggleModal}>
+					<div className={styles.modal}>
+						<div>Você gosta de Pokémon?</div>
+						<img
+							src="https://assets.pokemon.com/static2/_ui/img/og-default-image.jpeg"
+							alt=""
+						/>
+					</div>
+				</ConfirmationModal>
+			)}
 		</>
 	);
 }

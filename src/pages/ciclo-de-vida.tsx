@@ -15,11 +15,11 @@
  * 		no nextjs, você deve resolver este problema.
  */
 
-import { GetServerSideProps } from 'next/types';
+import { GetServerSideProps } from "next/types";
 
-import styles from '@/styles/ciclo-de-vida.module.css';
-import { Counter } from '@/components/Counter';
-import { useEffect, useState } from 'react';
+import styles from "@/styles/ciclo-de-vida.module.css";
+import { Counter } from "@/components/Counter";
+import { useEffect, useState } from "react";
 
 type CicloDeVidaProps = {
 	initialCount: number;
@@ -28,22 +28,24 @@ type CicloDeVidaProps = {
 export default function CicloDeVida({ initialCount }: CicloDeVidaProps) {
 	const [showCounter, setShowCounter] = useState(false);
 	const [count, setCount] = useState(0);
-
 	function handleOcultCounterClick() {
-		setShowCounter((prevState) => !prevState);
+		setShowCounter(prevState => !prevState);
 	}
 
 	useEffect(() => {
-		window.addEventListener('onCounterMount', (event: CustomEventInit) => {
-			console.log('onCounterMount');
+		window.addEventListener("onCounterMount", (event: CustomEventInit) => {
+			console.log("onCounterMount");
 		});
 
-		window.addEventListener('onCounterUnmount', (event: CustomEventInit) => {
-			console.log('onCounterUnmount');
+		window.addEventListener("onCounterUnmount", (event: CustomEventInit) => {
+			console.log("onCounterUnmount");
 		});
 
-		window.addEventListener('onCounterUpdate', (event: CustomEventInit) => {
-			console.log('onCounterUpdate');
+		window.addEventListener("onCounterUpdate", (event: CustomEventInit) => {
+			if (event.detail.value == 10) {
+				setShowCounter(false);
+			}
+			console.log("onCounterUpdate");
 		});
 	}, []);
 
@@ -51,7 +53,7 @@ export default function CicloDeVida({ initialCount }: CicloDeVidaProps) {
 		<div className={styles.container}>
 			<div>
 				<button type="button" onClick={handleOcultCounterClick}>
-					{showCounter ? 'Ocultar contador' : 'Mostrar contador'}
+					{showCounter ? "Ocultar contador" : "Mostrar contador"}
 				</button>
 
 				{showCounter && (
@@ -68,7 +70,9 @@ export default function CicloDeVida({ initialCount }: CicloDeVidaProps) {
 	);
 }
 
-export const getServerSideProps: GetServerSideProps<CicloDeVidaProps> = async () => {
+export const getServerSideProps: GetServerSideProps<
+	CicloDeVidaProps
+> = async () => {
 	return {
 		props: {
 			initialCount: 0,

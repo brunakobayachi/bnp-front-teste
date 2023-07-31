@@ -30,3 +30,15 @@
 	width: 50%;
 	margin-left: auto;
 }
+
+.content form button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.error {
+  font-size: 1rem;
+  color: red;
+}
+
+

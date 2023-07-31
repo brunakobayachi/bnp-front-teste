@@ -10,12 +10,27 @@
  * - Você deve corrigir a interface IUserCreate em src/types/user.d.ts
  */
 
-import { NextApiRequest, NextApiResponse } from 'next/types';
-
-import { IUser, IUserCreate } from '@/types/user.d';
+import { NextApiRequest, NextApiResponse } from "next/types";
+import { ApiMethod } from "@/decorators/method";
+import { IUser, IUserCreate } from "@/types/user.d";
 
 const users: IUser[] = [];
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
-	return res.status(400).json(undefined);
-};
+let idCounter = 0
+export default ApiMethod("POST")(
+	async (req: NextApiRequest, res: NextApiResponse) => {
+    try {
+      idCounter++
+      const body: IUserCreate = JSON.parse(req.body);
+      users.push({
+        id: idCounter,
+        name: body.name,
+        email: body.email,
+      });
+      return res.status(201).json(users);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json(undefined);
+    }
+	},
+);

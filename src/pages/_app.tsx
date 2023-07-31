@@ -1,7 +1,8 @@
-import type { AppProps } from 'next/app';
-import Head from 'next/head';
+import type { AppProps } from "next/app";
+import Head from "next/head";
 
-import '@/styles/globals.css';
+import "@/styles/globals.css";
+import { ToastContextProvider } from "@/contexts/ToastContext";
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
@@ -10,8 +11,9 @@ export default function App({ Component, pageProps }: AppProps) {
 				<title>Teste Front-End - BNP</title>
 			</Head>
 
-			<Component {...pageProps} />
+			<ToastContextProvider>
+				<Component {...pageProps} />
+			</ToastContextProvider>
 		</>
 	);
 }
-
